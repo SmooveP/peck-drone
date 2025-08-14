@@ -1,0 +1,554 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1894.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 16.0px 0.0px; line-height: 20.0px; font: 14.7px Arial; color: #000000; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="utf-8" /&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;Sunn O)))-ish Drone — MIDI + Looper + WAV (Single File)&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">  :root { --bg:#000; --fg:#e5e5e5; --mut:#9ca3af; --card:#0b0b0b; --accent:#ef4444; --accent2:#10b981; }</span></p>
+<p class="p1"><span class="s1">  html,body{height:100%;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;}</span></p>
+<p class="p1"><span class="s1">  .wrap{max-width:1100px;margin:0 auto;padding:20px}</span></p>
+<p class="p1"><span class="s1">  h1{font-size:22px;margin:0 0 12px 0;font-weight:900;letter-spacing:0.3px}</span></p>
+<p class="p1"><span class="s1">  h2{font-size:16px;margin:0 0 10px 0;font-weight:700}</span></p>
+<p class="p1"><span class="s1">  .grid{display:grid;gap:14px}</span></p>
+<p class="p1"><span class="s1">  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}</span></p>
+<p class="p1"><span class="s1">  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}</span></p>
+<p class="p1"><span class="s1">  .card{background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:14px}</span></p>
+<p class="p1"><span class="s1">  .row{display:flex;gap:10px;align-items:center}</span></p>
+<p class="p1"><span class="s1">  .btn{background:#111827;color:#e5e7eb;border:1px solid #374151;border-radius:12px;padding:8px 12px;cursor:pointer}</span></p>
+<p class="p1"><span class="s1">  .btn:hover{background:#1f2937}</span></p>
+<p class="p1"><span class="s1">  .btn.red{background:#7f1d1d;border-color:#b91c1c}</span></p>
+<p class="p1"><span class="s1">  .btn.green{background:#064e3b;border-color:#10b981}</span></p>
+<p class="p1"><span class="s1">  .btn.small{padding:6px 10px;font-size:12px}</span></p>
+<p class="p1"><span class="s1">  .badge{font-size:11px;color:#e5e7eb;background:#111827;border:1px solid #374151;border-radius:999px;padding:3px 8px}</span></p>
+<p class="p1"><span class="s1">  label{font-size:12px;color:var(--mut)}</span></p>
+<p class="p1"><span class="s1">  input[type=range]{width:100%}</span></p>
+<p class="p1"><span class="s1">  .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}</span></p>
+<p class="p1"><span class="s1">  .mut{color:var(--mut)}</span></p>
+<p class="p1"><span class="s1">  .warn{color:#fca5a5}</span></p>
+<p class="p1"><span class="s1">  .note{font-size:12px;opacity:.8}</span></p>
+<p class="p1"><span class="s1">  .slot{border:1px dashed #334155;border-radius:12px;padding:10px}</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="wrap"&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;header class="row" style="justify-content:space-between;align-items:center"&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;h1&gt;Sunn O)))-ish Drone — MIDI + Looper + WAV&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;button id="power" class="btn green"&gt;Power On&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;/header&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;p class="note"&gt;Start with your system volume &lt;strong&gt;low&lt;/strong&gt;. Works offline. For MIDI in Firefox: open &lt;span class="mono"&gt;about:config&lt;/span&gt; and set &lt;span class="mono"&gt;dom.webmidi.enabled&lt;/span&gt; → &lt;strong&gt;true&lt;/strong&gt;, then restart the tab.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;div class="grid g2"&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;section class="card"&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;h2&gt;Play Control&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;div class="row" style="flex-wrap:wrap;gap:12px"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button id="midiBtn" class="btn"&gt;MIDI: Off&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;span id="midiStatus" class="badge"&gt;No device&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button id="manualBtn" class="btn"&gt;Manual Drone: Off&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button id="panic" class="btn red"&gt;Panic (All Notes Off)&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;div class="grid g3" style="margin-top:12px"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Fundamental (Hz)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="baseFreq" type="range" min="20" max="120" step="0.5" value="49"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="baseRead"&gt;49.0 Hz&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Voices&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="voices" type="range" min="1" max="12" step="1" value="4"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="voicesRead"&gt;4&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Detune (±¢)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="detune" type="range" min="0" max="50" step="1" value="12"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="detuneRead"&gt;±12¢&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div class="row" style="gap:18px"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;&lt;input id="subOct" type="checkbox" checked&gt; Sub Oct&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;&lt;input id="fifth" type="checkbox" checked&gt; + Fifth&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;&lt;input id="octUp" type="checkbox" checked&gt; + Octave&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Preamp Drive (dB)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="drive" type="range" min="0" max="60" step="1" value="36"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="driveRead"&gt;36 dB&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Post Level (dB)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="postDb" type="range" min="-48" max="0" step="1" value="-18"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="postRead"&gt;-18 dB&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;div class="grid g3" style="margin-top:12px"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Bass (dB)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="bass" type="range" min="-12" max="12" step="1" value="6"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="bassRead"&gt;6&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Mids (dB)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="mids" type="range" min="-12" max="12" step="1" value="2"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="midsRead"&gt;2&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Treble (dB)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="treble" type="range" min="-12" max="12" step="1" value="-4"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="trebleRead"&gt;-4&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Low Cut (Hz)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="lowCut" type="range" min="10" max="60" step="1" value="25"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="lowRead"&gt;25&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;High Cut (Hz)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="highCut" type="range" min="1500" max="10000" step="100" value="8000"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="highRead"&gt;8000&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Reverb Mix&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="rvMix" type="range" min="0" max="1" step="0.01" value="0.4"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="rvMixRead"&gt;40%&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Reverb Time (s)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="rvTime" type="range" min="2" max="20" step="0.5" value="10"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="rvTimeRead"&gt;10.0&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Reverb Decay&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="rvDecay" type="range" min="0.5" max="6" step="0.1" value="3.5"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="rvDecayRead"&gt;3.5&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;label&gt;Amp Noise (dB)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;input id="noiseDb" type="range" min="-60" max="-12" step="1" value="-36"&gt;</span></p>
+<p class="p1"><span class="s1">          &lt;div class="mono" id="noiseRead"&gt;-36 dB&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;p class="note"&gt;Velocity → drive; Pitch bend → slow detuned glides. Safety first: keep &lt;span class="mono"&gt;Post Level&lt;/span&gt; low and raise gradually.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;/section&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;section class="card"&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;h2&gt;Recorder (Master Out → WAV)&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;div class="row" style="gap:10px;flex-wrap:wrap"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button id="recBtn" class="btn"&gt;Record&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button id="stopRecBtn" class="btn"&gt;Stop &amp; Save WAV&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;a id="downloadLink" class="btn small" style="display:none" download="doom-drone.wav"&gt;Download&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;span id="recStatus" class="badge"&gt;Idle&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;p class="note"&gt;Records exactly what you hear. The file saves locally (no server).&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;hr style="border:none;border-top:1px solid #1f2937;margin:10px 0" /&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;h2&gt;Loopers (x4)&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;div class="row" style="gap:14px;margin-bottom:8px"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;label&gt;&lt;input id="includeLoops" type="checkbox"&gt; Include other loops in new recordings (overdub)&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;div class="grid g2"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div class="slot" id="slot0"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div class="slot" id="slot1"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div class="slot" id="slot2"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;div class="slot" id="slot3"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;/section&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;section class="card" style="margin-top:14px"&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;h2&gt;Tips&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;ul class="note"&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;li&gt;For monolithic weight: enable &lt;span class="mono"&gt;Sub Oct&lt;/span&gt;, set &lt;span class="mono"&gt;Low Cut&lt;/span&gt; 18–24 Hz, keep &lt;span class="mono"&gt;High Cut&lt;/span&gt; ~4–6 kHz.&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;li&gt;For smeared walls: widen &lt;span class="mono"&gt;Detune&lt;/span&gt; (±18–22¢) and lengthen reverb.&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;li&gt;Use the loopers to build layers: bass bed → mid growl → airy overtone → noise layer.&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1">    &lt;/ul&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;/section&gt;</span></p>
+<p class="p1"><span class="s1">  &lt;footer class="note" style="margin-top:10px"&gt;Homage to the aesthetic of heavy sustained drones. No endorsement implied.&lt;/footer&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">(function(){</span></p>
+<p class="p1"><span class="s1">  const el = id=&gt;document.getElementById(id);</span></p>
+<p class="p1"><span class="s1">  const ctxObj = { ctx:null };</span></p>
+<p class="p1"><span class="s1">  let master, preIn, postGain, waveShaper, lowShelf, midPeak, highShelf, hp, lp, verb, verbWet, verbDry, comp, noiseSrc, noiseGain; </span></p>
+<p class="p1"><span class="s1">  let loopBus, loopMixOut; // bus for summing loops</span></p>
+<p class="p1"><span class="s1">  let includeLoopsInCapture = false;</span></p>
+<p class="p1"><span class="s1">  const state = {</span></p>
+<p class="p1"><span class="s1">    isOn:false,</span></p>
+<p class="p1"><span class="s1">    midiEnabled:false,</span></p>
+<p class="p1"><span class="s1">    manualOn:false,</span></p>
+<p class="p1"><span class="s1">    activeNotes:new Map(), // midiNote -&gt; {osc[], gain[]}</span></p>
+<p class="p1"><span class="s1">    pitchBend:0,</span></p>
+<p class="p1"><span class="s1">  };</span></p>
+<p class="p1"><span class="s1">  function dbToGain(db){ return Math.pow(10, db/20); }</span></p>
+<p class="p1"><span class="s1">  function createWaveshaperCurve(amount=400, samples=44100){</span></p>
+<p class="p1"><span class="s1">    const curve = new Float32Array(samples);</span></p>
+<p class="p1"><span class="s1">    const k = typeof amount === 'number' ? amount : 50;</span></p>
+<p class="p1"><span class="s1">    const deg = Math.PI/180;</span></p>
+<p class="p1"><span class="s1">    for(let i=0;i&lt;samples;i++){</span></p>
+<p class="p1"><span class="s1">      const x = (i*2)/samples - 1;</span></p>
+<p class="p1"><span class="s1">      curve[i] = ((3+k)*x*20*deg) / (Math.PI + k*Math.abs(x));</span></p>
+<p class="p1"><span class="s1">    }</span></p>
+<p class="p1"><span class="s1">    return curve;</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function generateIR(ctx, duration=6, decay=3, reverse=false){</span></p>
+<p class="p1"><span class="s1">    const rate = ctx.sampleRate;</span></p>
+<p class="p1"><span class="s1">    const length = rate*duration;</span></p>
+<p class="p1"><span class="s1">    const impulse = ctx.createBuffer(2, length, rate);</span></p>
+<p class="p1"><span class="s1">    for(let ch=0; ch&lt;2; ch++){</span></p>
+<p class="p1"><span class="s1">      const data = impulse.getChannelData(ch);</span></p>
+<p class="p1"><span class="s1">      for(let i=0;i&lt;length;i++){</span></p>
+<p class="p1"><span class="s1">        const n = reverse ? length - i : i;</span></p>
+<p class="p1"><span class="s1">        data[i] = (Math.random()*2-1) * Math.pow(1 - n/length, decay);</span></p>
+<p class="p1"><span class="s1">      }</span></p>
+<p class="p1"><span class="s1">    }</span></p>
+<p class="p1"><span class="s1">    return impulse;</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function midiToFreq(n){ return 440 * Math.pow(2, (n-69)/12); }</span></p>
+<p class="p1"><span class="s1">  function ensureCtx(){</span></p>
+<p class="p1"><span class="s1">    if(ctxObj.ctx) return;</span></p>
+<p class="p1"><span class="s1">    const ctx = new (window.AudioContext||window.webkitAudioContext)({latencyHint:'interactive'});</span></p>
+<p class="p1"><span class="s1">    ctxObj.ctx = ctx;</span></p>
+<p class="p1"><span class="s1">    master = ctx.createGain(); master.gain.value = 0.9; master.connect(ctx.destination);</span></p>
+<p class="p1"><span class="s1">    // Preamp chain entry for synth voices</span></p>
+<p class="p1"><span class="s1">    preIn = ctx.createGain();</span></p>
+<p class="p1"><span class="s1">    waveShaper = ctx.createWaveShaper();</span></p>
+<p class="p1"><span class="s1">    waveShaper.curve = createWaveshaperCurve(400);</span></p>
+<p class="p1"><span class="s1">    lowShelf = ctx.createBiquadFilter(); lowShelf.type='lowshelf'; lowShelf.frequency.value=80;</span></p>
+<p class="p1"><span class="s1">    midPeak = ctx.createBiquadFilter(); midPeak.type='peaking'; midPeak.frequency.value=700; midPeak.Q.value=0.7;</span></p>
+<p class="p1"><span class="s1">    highShelf = ctx.createBiquadFilter(); highShelf.type='highshelf'; highShelf.frequency.value=3000;</span></p>
+<p class="p1"><span class="s1">    hp = ctx.createBiquadFilter(); hp.type='highpass';</span></p>
+<p class="p1"><span class="s1">    lp = ctx.createBiquadFilter(); lp.type='lowpass';</span></p>
+<p class="p1"><span class="s1">    verb = ctx.createConvolver(); verb.buffer = generateIR(ctx, 10, 3.5, false);</span></p>
+<p class="p1"><span class="s1">    verbWet = ctx.createGain(); verbDry = ctx.createGain(); verbWet.gain.value=0.4; verbDry.gain.value=0.6;</span></p>
+<p class="p1"><span class="s1">    comp = ctx.createDynamicsCompressor();</span></p>
+<p class="p1"><span class="s1">    comp.threshold.value = -28; comp.knee.value = 24; comp.ratio.value = 8; comp.attack.value = 0.02; comp.release.value = 0.3;</span></p>
+<p class="p1"><span class="s1">    postGain = ctx.createGain(); postGain.gain.value = dbToGain(-18);</span></p>
+<p class="p1"><span class="s1">    // Loop bus</span></p>
+<p class="p1"><span class="s1">    loopBus = ctx.createGain(); // where all loop players sum</span></p>
+<p class="p1"><span class="s1">    loopMixOut = ctx.createGain(); // loop overall volume</span></p>
+<p class="p1"><span class="s1">    loopBus.connect(loopMixOut);</span></p>
+<p class="p1"><span class="s1">    // Amp noise</span></p>
+<p class="p1"><span class="s1">    const noiseBuf = ctx.createBuffer(1, ctx.sampleRate*5, ctx.sampleRate);</span></p>
+<p class="p1"><span class="s1">    const nd = noiseBuf.getChannelData(0); for(let i=0;i&lt;nd.length;i++){ nd[i] = (Math.random()*2-1)*0.3; }</span></p>
+<p class="p1"><span class="s1">    noiseSrc = ctx.createBufferSource(); noiseSrc.buffer = noiseBuf; noiseSrc.loop = true;</span></p>
+<p class="p1"><span class="s1">    noiseGain = ctx.createGain(); noiseGain.gain.value = dbToGain(-36);</span></p>
+<p class="p1"><span class="s1">    // Wire synth preamp path</span></p>
+<p class="p1"><span class="s1">    preIn.connect(waveShaper);</span></p>
+<p class="p1"><span class="s1">    waveShaper.connect(lowShelf);</span></p>
+<p class="p1"><span class="s1">    lowShelf.connect(midPeak);</span></p>
+<p class="p1"><span class="s1">    midPeak.connect(highShelf);</span></p>
+<p class="p1"><span class="s1">    highShelf.connect(hp);</span></p>
+<p class="p1"><span class="s1">    hp.connect(lp);</span></p>
+<p class="p1"><span class="s1">    // Split to reverb</span></p>
+<p class="p1"><span class="s1">    const sum = ctx.createGain();</span></p>
+<p class="p1"><span class="s1">    lp.connect(verbDry);</span></p>
+<p class="p1"><span class="s1">    lp.connect(verb);</span></p>
+<p class="p1"><span class="s1">    verb.connect(verbWet);</span></p>
+<p class="p1"><span class="s1">    verbWet.connect(sum);</span></p>
+<p class="p1"><span class="s1">    verbDry.connect(sum);</span></p>
+<p class="p1"><span class="s1">    // Add loop bus into main sum</span></p>
+<p class="p1"><span class="s1">    loopMixOut.connect(sum);</span></p>
+<p class="p1"><span class="s1">    // Final stages</span></p>
+<p class="p1"><span class="s1">    sum.connect(comp);</span></p>
+<p class="p1"><span class="s1">    comp.connect(postGain);</span></p>
+<p class="p1"><span class="s1">    postGain.connect(master);</span></p>
+<p class="p1"><span class="s1">    // Start noise</span></p>
+<p class="p1"><span class="s1">    noiseSrc.connect(noiseGain); noiseGain.connect(preIn); noiseSrc.start();</span></p>
+<p class="p1"><span class="s1">    // Expose taps for recorders</span></p>
+<p class="p1"><span class="s1">    ctx._sumNode = sum; // pre-comp sum</span></p>
+<p class="p1"><span class="s1">    ctx._postNode = postGain; // post-comp/postgain (what you hear)</span></p>
+<p class="p1"><span class="s1">    ctx._preIn = preIn;</span></p>
+<p class="p1"><span class="s1">    ctx._loopBus = loopBus;</span></p>
+<p class="p1"><span class="s1">    // AudioWorklet for WAV recording</span></p>
+<p class="p1"><span class="s1">    if (ctx.audioWorklet) {</span></p>
+<p class="p1"><span class="s1">      const workletCode = `</span></p>
+<p class="p1"><span class="s1">        class RecorderProcessor extends AudioWorkletProcessor {</span></p>
+<p class="p1"><span class="s1">          constructor(){</span></p>
+<p class="p1"><span class="s1">            super();</span></p>
+<p class="p1"><span class="s1">            this._bufferL = [];</span></p>
+<p class="p1"><span class="s1">            this._bufferR = [];</span></p>
+<p class="p1"><span class="s1">            this._isRecording = false;</span></p>
+<p class="p1"><span class="s1">            this.port.onmessage = (e)=&gt;{</span></p>
+<p class="p1"><span class="s1">              const {cmd} = e.data;</span></p>
+<p class="p1"><span class="s1">              if(cmd==='start'){ this._isRecording=true; this._bufferL=[]; this._bufferR=[]; }</span></p>
+<p class="p1"><span class="s1">              if(cmd==='stop'){ this._isRecording=false; this.port.postMessage({cmd:'data', left:this._bufferL, right:this._bufferR}); }</span></p>
+<p class="p1"><span class="s1">            };</span></p>
+<p class="p1"><span class="s1">          }</span></p>
+<p class="p1"><span class="s1">          process(inputs){</span></p>
+<p class="p1"><span class="s1">            if(!this._isRecording) return true;</span></p>
+<p class="p1"><span class="s1">            const input = inputs[0];</span></p>
+<p class="p1"><span class="s1">            if(input &amp;&amp; input[0]){</span></p>
+<p class="p1"><span class="s1">              const ch0 = input[0];</span></p>
+<p class="p1"><span class="s1">              const ch1 = input[1] || input[0];</span></p>
+<p class="p1"><span class="s1">              this._bufferL.push(new Float32Array(ch0));</span></p>
+<p class="p1"><span class="s1">              this._bufferR.push(new Float32Array(ch1));</span></p>
+<p class="p1"><span class="s1">            }</span></p>
+<p class="p1"><span class="s1">            return true;</span></p>
+<p class="p1"><span class="s1">          }</span></p>
+<p class="p1"><span class="s1">        }</span></p>
+<p class="p1"><span class="s1">        registerProcessor('recorder-processor', RecorderProcessor);</span></p>
+<p class="p1"><span class="s1">      `;</span></p>
+<p class="p1"><span class="s1">      const blob = new Blob([workletCode], {type:'application/javascript'});</span></p>
+<p class="p1"><span class="s1">      const url = URL.createObjectURL(blob);</span></p>
+<p class="p1"><span class="s1">      ctx.audioWorklet.addModule(url).then(()=&gt;{</span></p>
+<p class="p1"><span class="s1">        // ready</span></p>
+<p class="p1"><span class="s1">      });</span></p>
+<p class="p1"><span class="s1">    }</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function setUI(){</span></p>
+<p class="p1"><span class="s1">    // Ranges → labels</span></p>
+<p class="p1"><span class="s1">    const bind = (id, out, fmt=(v)=&gt;v)=&gt;{</span></p>
+<p class="p1"><span class="s1">      const inp = el(id), lab = el(out);</span></p>
+<p class="p1"><span class="s1">      const update = ()=&gt;{ lab.textContent = fmt(inp.value); applyParam(id, parseFloat(inp.value)); };</span></p>
+<p class="p1"><span class="s1">      inp.addEventListener('input', update); update();</span></p>
+<p class="p1"><span class="s1">    };</span></p>
+<p class="p1"><span class="s1">    bind('baseFreq','baseRead',v=&gt;parseFloat(v).toFixed(1)+' Hz');</span></p>
+<p class="p1"><span class="s1">    bind('voices','voicesRead',v=&gt;v);</span></p>
+<p class="p1"><span class="s1">    bind('detune','detuneRead',v=&gt;'±'+v+'¢');</span></p>
+<p class="p1"><span class="s1">    bind('drive','driveRead',v=&gt;v+' dB');</span></p>
+<p class="p1"><span class="s1">    bind('postDb','postRead',v=&gt;v+' dB');</span></p>
+<p class="p1"><span class="s1">    bind('bass','bassRead',v=&gt;v);</span></p>
+<p class="p1"><span class="s1">    bind('mids','midsRead',v=&gt;v);</span></p>
+<p class="p1"><span class="s1">    bind('treble','trebleRead',v=&gt;v);</span></p>
+<p class="p1"><span class="s1">    bind('lowCut','lowRead',v=&gt;v);</span></p>
+<p class="p1"><span class="s1">    bind('highCut','highRead',v=&gt;v);</span></p>
+<p class="p1"><span class="s1">    bind('rvMix','rvMixRead',v=&gt;(Math.round(v*100))+'%');</span></p>
+<p class="p1"><span class="s1">    bind('rvTime','rvTimeRead',v=&gt;parseFloat(v).toFixed(1));</span></p>
+<p class="p1"><span class="s1">    bind('rvDecay','rvDecayRead',v=&gt;parseFloat(v).toFixed(1));</span></p>
+<p class="p1"><span class="s1">    el('subOct').addEventListener('change', ()=&gt;applyParam('partials'));</span></p>
+<p class="p1"><span class="s1">    el('fifth').addEventListener('change', ()=&gt;applyParam('partials'));</span></p>
+<p class="p1"><span class="s1">    el('octUp').addEventListener('change', ()=&gt;applyParam('partials'));</span></p>
+<p class="p1"><span class="s1">    el('power').addEventListener('click', async()=&gt;{</span></p>
+<p class="p1"><span class="s1">      ensureCtx();</span></p>
+<p class="p1"><span class="s1">      if(!state.isOn){ await ctxObj.ctx.resume(); state.isOn=true; el('power').textContent='Power Off'; el('power').classList.remove('green'); el('power').classList.add('red'); }</span></p>
+<p class="p1"><span class="s1">      else { killAllNotes(); state.isOn=false; el('power').textContent='Power On'; el('power').classList.add('green'); el('power').classList.remove('red'); }</span></p>
+<p class="p1"><span class="s1">    });</span></p>
+<p class="p1"><span class="s1">    el('manualBtn').addEventListener('click',()=&gt;{</span></p>
+<p class="p1"><span class="s1">      if(!state.manualOn){ startManualDrone(); state.manualOn=true; el('manualBtn').textContent='Manual Drone: On'; }</span></p>
+<p class="p1"><span class="s1">      else { stopManualDrone(); state.manualOn=false; el('manualBtn').textContent='Manual Drone: Off'; }</span></p>
+<p class="p1"><span class="s1">    });</span></p>
+<p class="p1"><span class="s1">    el('panic').addEventListener('click', ()=&gt;{ killAllNotes(); });</span></p>
+<p class="p1"><span class="s1">    el('midiBtn').addEventListener('click', ()=&gt;{</span></p>
+<p class="p1"><span class="s1">      if(!state.midiEnabled) enableMIDI(); else disableMIDI();</span></p>
+<p class="p1"><span class="s1">    });</span></p>
+<p class="p1"><span class="s1">    el('includeLoops').addEventListener('change', (e)=&gt;{ includeLoopsInCapture = e.target.checked; });</span></p>
+<p class="p1"><span class="s1">    setupRecorderUI();</span></p>
+<p class="p1"><span class="s1">    setupLoopers();</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function applyParam(id, val){</span></p>
+<p class="p1"><span class="s1">    if(!ctxObj.ctx) return;</span></p>
+<p class="p1"><span class="s1">    const ctx = ctxObj.ctx;</span></p>
+<p class="p1"><span class="s1">    switch(id){</span></p>
+<p class="p1"><span class="s1">      case 'bass': lowShelf.gain.setTargetAtTime(val, ctx.currentTime, 0.01); break;</span></p>
+<p class="p1"><span class="s1">      case 'mids': midPeak.gain.setTargetAtTime(val, ctx.currentTime, 0.01); break;</span></p>
+<p class="p1"><span class="s1">      case 'treble': highShelf.gain.setTargetAtTime(val, ctx.currentTime, 0.01); break;</span></p>
+<p class="p1"><span class="s1">      case 'lowCut': hp.frequency.setTargetAtTime(parseFloat(el('lowCut').value), ctx.currentTime, 0.01); break;</span></p>
+<p class="p1"><span class="s1">      case 'highCut': lp.frequency.setTargetAtTime(parseFloat(el('highCut').value), ctx.currentTime, 0.01); break;</span></p>
+<p class="p1"><span class="s1">      case 'rvMix': verbWet.gain.setTargetAtTime(parseFloat(el('rvMix').value), ctx.currentTime, 0.05); verbDry.gain.setTargetAtTime(1-parseFloat(el('rvMix').value), ctx.currentTime, 0.05); break;</span></p>
+<p class="p1"><span class="s1">      case 'rvTime': verb.buffer = generateIR(ctx, Math.max(1, parseFloat(el('rvTime').value)), Math.max(0.1, parseFloat(el('rvDecay').value))); break;</span></p>
+<p class="p1"><span class="s1">      case 'rvDecay': verb.buffer = generateIR(ctx, Math.max(1, parseFloat(el('rvTime').value)), Math.max(0.1, parseFloat(el('rvDecay').value))); break;</span></p>
+<p class="p1"><span class="s1">      case 'postDb': postGain.gain.setTargetAtTime(dbToGain(parseFloat(el('postDb').value)), ctx.currentTime, 0.03); break;</span></p>
+<p class="p1"><span class="s1">      case 'drive': /* handled per-voice when spawning */ break;</span></p>
+<p class="p1"><span class="s1">      case 'partials': /* next note will use */ break;</span></p>
+<p class="p1"><span class="s1">      default: break;</span></p>
+<p class="p1"><span class="s1">    }</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  // ---------- Manual Drone (non-MIDI) ----------</span></p>
+<p class="p1"><span class="s1">  let manualNodes = [];</span></p>
+<p class="p1"><span class="s1">  function makeOscStack(freq, velocity=100){</span></p>
+<p class="p1"><span class="s1">    const ctx = ctxObj.ctx;</span></p>
+<p class="p1"><span class="s1">    const voices = parseInt(el('voices').value);</span></p>
+<p class="p1"><span class="s1">    const detune = parseInt(el('detune').value);</span></p>
+<p class="p1"><span class="s1">    const baseDrive = parseFloat(el('drive').value);</span></p>
+<p class="p1"><span class="s1">    const partials = [freq];</span></p>
+<p class="p1"><span class="s1">    if(el('subOct').checked) partials.push(freq/2);</span></p>
+<p class="p1"><span class="s1">    if(el('fifth').checked) partials.push(freq*1.5);</span></p>
+<p class="p1"><span class="s1">    if(el('octUp').checked) partials.push(freq*2);</span></p>
+<p class="p1"><span class="s1">    const oscNodes = [];</span></p>
+<p class="p1"><span class="s1">    partials.forEach(pf=&gt;{</span></p>
+<p class="p1"><span class="s1">      for(let v=0; v&lt;voices; v++){</span></p>
+<p class="p1"><span class="s1">        const osc = ctx.createOscillator();</span></p>
+<p class="p1"><span class="s1">        osc.type = (v%2===0)?'sawtooth':'triangle';</span></p>
+<p class="p1"><span class="s1">        const cents = (Math.random()*2-1)*detune + state.pitchBend; // include bend</span></p>
+<p class="p1"><span class="s1">        osc.detune.value = cents;</span></p>
+<p class="p1"><span class="s1">        osc.frequency.value = pf;</span></p>
+<p class="p1"><span class="s1">        const preGain = ctx.createGain();</span></p>
+<p class="p1"><span class="s1">        const velDb = (velocity-64)/64 * 6; // +/- ~6 dB swing from velocity</span></p>
+<p class="p1"><span class="s1">        const perVoiceDb = baseDrive - 20*Math.log10(voices*partials.length) + velDb;</span></p>
+<p class="p1"><span class="s1">        preGain.gain.value = dbToGain(perVoiceDb);</span></p>
+<p class="p1"><span class="s1">        osc.connect(preGain).connect(ctx._preIn);</span></p>
+<p class="p1"><span class="s1">        osc.start();</span></p>
+<p class="p1"><span class="s1">        oscNodes.push({osc, preGain});</span></p>
+<p class="p1"><span class="s1">      }</span></p>
+<p class="p1"><span class="s1">    });</span></p>
+<p class="p1"><span class="s1">    return oscNodes;</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function startManualDrone(){ ensureCtx(); stopManualDrone(); manualNodes = makeOscStack(parseFloat(el('baseFreq').value)); }</span></p>
+<p class="p1"><span class="s1">  function stopManualDrone(){ if(!manualNodes) return; manualNodes.forEach(n=&gt;{ try{n.osc.stop();}catch(e){}; try{n.osc.disconnect();}catch(e){} }); manualNodes=[]; }</span></p>
+<p class="p1"><span class="s1">  // Reflect UI value live change</span></p>
+<p class="p1"><span class="s1">  el('baseFreq')?.addEventListener('input', ()=&gt;{ if(state.manualOn){ stopManualDrone(); startManualDrone(); } });</span></p>
+<p class="p1"><span class="s1">  // ---------- MIDI ----------</span></p>
+<p class="p1"><span class="s1">  let midiAccess = null;</span></p>
+<p class="p1"><span class="s1">  async function enableMIDI(){</span></p>
+<p class="p1"><span class="s1">    try{</span></p>
+<p class="p1"><span class="s1">      ensureCtx();</span></p>
+<p class="p1"><span class="s1">      midiAccess = await navigator.requestMIDIAccess({sysex:false});</span></p>
+<p class="p1"><span class="s1">      midiAccess.inputs.forEach(input=&gt; input.onmidimessage = onMIDIMessage);</span></p>
+<p class="p1"><span class="s1">      midiAccess.onstatechange = (e)=&gt;{ el('midiStatus').textContent = midiDeviceSummary(); };</span></p>
+<p class="p1"><span class="s1">      state.midiEnabled = true; el('midiBtn').textContent='MIDI: On';</span></p>
+<p class="p1"><span class="s1">      el('midiStatus').textContent = midiDeviceSummary();</span></p>
+<p class="p1"><span class="s1">    }catch(err){ el('midiStatus').textContent = 'MIDI unavailable'; }</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function disableMIDI(){</span></p>
+<p class="p1"><span class="s1">    if(midiAccess){ midiAccess.inputs.forEach(input=&gt; input.onmidimessage = null); }</span></p>
+<p class="p1"><span class="s1">    state.midiEnabled=false; el('midiBtn').textContent='MIDI: Off'; el('midiStatus').textContent='Disabled';</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function midiDeviceSummary(){</span></p>
+<p class="p1"><span class="s1">    const ins = []; midiAccess &amp;&amp; midiAccess.inputs.forEach(i=&gt;ins.push(i.name));</span></p>
+<p class="p1"><span class="s1">    return ins.length? ('Input: '+ins.join(', ')) : 'No device';</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function onMIDIMessage(e){</span></p>
+<p class="p1"><span class="s1">    const [status, d1, d2] = e.data; const cmd = status&gt;&gt;4; const ch = status &amp; 0xf;</span></p>
+<p class="p1"><span class="s1">    if(cmd===9 &amp;&amp; d2&gt;0){ noteOn(d1, d2); }</span></p>
+<p class="p1"><span class="s1">    else if((cmd===8) || (cmd===9 &amp;&amp; d2===0)){ noteOff(d1); }</span></p>
+<p class="p1"><span class="s1">    else if(cmd===14){ // pitch bend</span></p>
+<p class="p1"><span class="s1">      const value = ((d2&lt;&lt;7) + d1) - 8192; // -8192..+8191</span></p>
+<p class="p1"><span class="s1">      const bendCents = (value/8192) * 100; // +/- 100 cents</span></p>
+<p class="p1"><span class="s1">      state.pitchBend = bendCents;</span></p>
+<p class="p1"><span class="s1">      // update detune of all active note oscs</span></p>
+<p class="p1"><span class="s1">      state.activeNotes.forEach(stack=&gt;{</span></p>
+<p class="p1"><span class="s1">        stack.forEach(n=&gt;{ if(n.osc) n.osc.detune.value = n.osc.detune.value + 0; /* already drifting; ignore */ });</span></p>
+<p class="p1"><span class="s1">      });</span></p>
+<p class="p1"><span class="s1">    }</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function noteOn(note, vel){ ensureCtx(); if(state.manualOn) { /* can layer with manual */ }</span></p>
+<p class="p1"><span class="s1">    if(state.activeNotes.has(note)) return; // already sounding</span></p>
+<p class="p1"><span class="s1">    const freq = midiToFreq(note);</span></p>
+<p class="p1"><span class="s1">    const nodes = makeOscStack(freq, vel);</span></p>
+<p class="p1"><span class="s1">    state.activeNotes.set(note, nodes);</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function noteOff(note){ const nodes = state.activeNotes.get(note); if(!nodes) return; nodes.forEach(n=&gt;{ try{n.osc.stop();}catch(e){}; try{n.osc.disconnect();}catch(e){} }); state.activeNotes.delete(note); }</span></p>
+<p class="p1"><span class="s1">  function killAllNotes(){ state.activeNotes.forEach((nodes)=&gt;{ nodes.forEach(n=&gt;{ try{n.osc.stop();}catch(e){}; try{n.osc.disconnect();}catch(e){} }); }); state.activeNotes.clear(); stopManualDrone(); }</span></p>
+<p class="p1"><span class="s1">  // ---------- WAV Recorder (Master Out) via AudioWorklet ----------</span></p>
+<p class="p1"><span class="s1">  let recNode=null, recIn=null, recCollecting=false, recBuffers=null;</span></p>
+<p class="p1"><span class="s1">  function setupRecorderUI(){</span></p>
+<p class="p1"><span class="s1">    el('recBtn').addEventListener('click', startMasterRecord);</span></p>
+<p class="p1"><span class="s1">    el('stopRecBtn').addEventListener('click', stopMasterRecord);</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  async function ensureRecorder(){ ensureCtx(); const ctx = ctxObj.ctx; if(recNode) return; if(!ctx.audioWorklet){ el('recStatus').textContent='AudioWorklet not supported'; return; }</span></p>
+<p class="p1"><span class="s1">    await new Promise(r=&gt; setTimeout(r,0));</span></p>
+<p class="p1"><span class="s1">    recIn = ctx.createGain();</span></p>
+<p class="p1"><span class="s1">    ctx._postNode.connect(recIn); // tap what you hear</span></p>
+<p class="p1"><span class="s1">    recNode = new AudioWorkletNode(ctx, 'recorder-processor');</span></p>
+<p class="p1"><span class="s1">    recIn.connect(recNode);</span></p>
+<p class="p1"><span class="s1">    recBuffers = {L:[], R:[]};</span></p>
+<p class="p1"><span class="s1">    recNode.port.onmessage = (e)=&gt;{</span></p>
+<p class="p1"><span class="s1">      if(e.data.cmd==='data'){</span></p>
+<p class="p1"><span class="s1">        recBuffers.L = e.data.left; recBuffers.R = e.data.right;</span></p>
+<p class="p1"><span class="s1">        const wav = encodeWAV(recBuffers, ctx.sampleRate);</span></p>
+<p class="p1"><span class="s1">        const url = URL.createObjectURL(wav);</span></p>
+<p class="p1"><span class="s1">        const a = el('downloadLink'); a.href=url; a.style.display='inline-block';</span></p>
+<p class="p1"><span class="s1">      }</span></p>
+<p class="p1"><span class="s1">    };</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  async function startMasterRecord(){ await ensureRecorder(); if(!recNode) return; recNode.port.postMessage({cmd:'start'}); recCollecting=true; el('recStatus').textContent='Recording…'; }</span></p>
+<p class="p1"><span class="s1">  function stopMasterRecord(){ if(!recNode||!recCollecting) return; recNode.port.postMessage({cmd:'stop'}); recCollecting=false; el('recStatus').textContent='Stopped'; }</span></p>
+<p class="p1"><span class="s1">  function mergeFloat32(arrays){ let total=0; arrays.forEach(a=&gt; total+=a.length); const out = new Float32Array(total); let off=0; arrays.forEach(a=&gt;{ out.set(a, off); off+=a.length; }); return out; }</span></p>
+<p class="p1"><span class="s1">  function floatTo16BitPCM(view, offset, input){ for (let i = 0; i &lt; input.length; i++, offset += 2) { let s = Math.max(-1, Math.min(1, input[i])); view.setInt16(offset, s &lt; 0 ? s * 0x8000 : s * 0x7FFF, true); } return offset; }</span></p>
+<p class="p1"><span class="s1">  function writeString(view, offset, str){ for (let i = 0; i &lt; str.length; i++) { view.setUint8(offset + i, str.charCodeAt(i)); } }</span></p>
+<p class="p1"><span class="s1">  function encodeWAV(buffers, sampleRate){</span></p>
+<p class="p1"><span class="s1">    const left = mergeFloat32(buffers.L); const right = mergeFloat32(buffers.R);</span></p>
+<p class="p1"><span class="s1">    const interleaved = new Float32Array(left.length + right.length);</span></p>
+<p class="p1"><span class="s1">    for(let i=0,j=0;i&lt;left.length;i++,j+=2){ interleaved[j]=left[i]; interleaved[j+1]=right[i]; }</span></p>
+<p class="p1"><span class="s1">    const buffer = new ArrayBuffer(44 + interleaved.length * 2);</span></p>
+<p class="p1"><span class="s1">    const view = new DataView(buffer);</span></p>
+<p class="p1"><span class="s1">    writeString(view, 0, 'RIFF');</span></p>
+<p class="p1"><span class="s1">    view.setUint32(4, 36 + interleaved.length * 2, true);</span></p>
+<p class="p1"><span class="s1">    writeString(view, 8, 'WAVE');</span></p>
+<p class="p1"><span class="s1">    writeString(view, 12, 'fmt ');</span></p>
+<p class="p1"><span class="s1">    view.setUint32(16, 16, true);</span></p>
+<p class="p1"><span class="s1">    view.setUint16(20, 1, true);</span></p>
+<p class="p1"><span class="s1">    view.setUint16(22, 2, true);</span></p>
+<p class="p1"><span class="s1">    view.setUint32(24, sampleRate, true);</span></p>
+<p class="p1"><span class="s1">    view.setUint32(28, sampleRate * 4, true);</span></p>
+<p class="p1"><span class="s1">    view.setUint16(32, 4, true);</span></p>
+<p class="p1"><span class="s1">    view.setUint16(34, 16, true);</span></p>
+<p class="p1"><span class="s1">    writeString(view, 36, 'data');</span></p>
+<p class="p1"><span class="s1">    view.setUint32(40, interleaved.length * 2, true);</span></p>
+<p class="p1"><span class="s1">    floatTo16BitPCM(view, 44, interleaved);</span></p>
+<p class="p1"><span class="s1">    return new Blob([view], {type:'audio/wav'});</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  // ---------- Loopers (x4) ----------</span></p>
+<p class="p1"><span class="s1">  const loopSlots = [0,1,2,3].map(i=&gt;({index:i, recNode:null, recIn:null, buffers:null, bufSrc:null, gain:null, isRecording:false, isPlaying:false}));</span></p>
+<p class="p1"><span class="s1">  function setupLoopers(){ loopSlots.forEach(initLoopSlot); }</span></p>
+<p class="p1"><span class="s1">  async function initLoopSlot(slot){ ensureCtx(); const div = document.getElementById('slot'+slot.index); const ctx = ctxObj.ctx;</span></p>
+<p class="p1"><span class="s1">    div.innerHTML = `</span></p>
+<p class="p1"><span class="s1">      &lt;div class="row" style="justify-content:space-between"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;strong&gt;Loop ${slot.index+1}&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;span class="badge" id="lstat${slot.index}"&gt;Empty&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;div class="row" style="flex-wrap:wrap;gap:8px;margin-top:8px"&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button class="btn small" id="lrec${slot.index}"&gt;Rec&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button class="btn small" id="lstop${slot.index}"&gt;Stop&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button class="btn small" id="lplay${slot.index}"&gt;Play&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;button class="btn small" id="lclear${slot.index}"&gt;Clear&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1">        &lt;label&gt;Vol &lt;input type="range" id="lgain${slot.index}" min="0" max="1.5" step="0.01" value="1" /&gt;&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">    `;</span></p>
+<p class="p1"><span class="s1">    await ensureLoopRecorder(slot);</span></p>
+<p class="p1"><span class="s1">    el('lrec'+slot.index).addEventListener('click', ()=&gt; startLoopRecord(slot));</span></p>
+<p class="p1"><span class="s1">    el('lstop'+slot.index).addEventListener('click', ()=&gt; stopLoopRecord(slot));</span></p>
+<p class="p1"><span class="s1">    el('lplay'+slot.index).addEventListener('click', ()=&gt; toggleLoop(slot));</span></p>
+<p class="p1"><span class="s1">    el('lclear'+slot.index).addEventListener('click', ()=&gt; clearLoop(slot));</span></p>
+<p class="p1"><span class="s1">    el('lgain'+slot.index).addEventListener('input', (e)=&gt;{ if(slot.gain) slot.gain.gain.value = parseFloat(e.target.value); });</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  async function ensureLoopRecorder(slot){ const ctx = ctxObj.ctx; if(slot.recNode) return; if(!ctx.audioWorklet) return;</span></p>
+<p class="p1"><span class="s1">    slot.recIn = ctx.createGain();</span></p>
+<p class="p1"><span class="s1">    // Capture from synth sum + optionally existing loops</span></p>
+<p class="p1"><span class="s1">    const captureSource = ctx.createGain();</span></p>
+<p class="p1"><span class="s1">    ctx._sumNode.connect(captureSource);</span></p>
+<p class="p1"><span class="s1">    captureSource.gain.value = 1.0;</span></p>
+<p class="p1"><span class="s1">    captureSource.connect(slot.recIn);</span></p>
+<p class="p1"><span class="s1">    // Include loops option handled by also connecting loop bus</span></p>
+<p class="p1"><span class="s1">    if(includeLoopsInCapture){ ctx._loopBus.connect(slot.recIn); }</span></p>
+<p class="p1"><span class="s1">    slot.recNode = new AudioWorkletNode(ctx, 'recorder-processor');</span></p>
+<p class="p1"><span class="s1">    slot.recIn.connect(slot.recNode);</span></p>
+<p class="p1"><span class="s1">    slot.buffers = {L:[], R:[]};</span></p>
+<p class="p1"><span class="s1">    slot.recNode.port.onmessage = (e)=&gt;{</span></p>
+<p class="p1"><span class="s1">      if(e.data.cmd==='data'){</span></p>
+<p class="p1"><span class="s1">        slot.buffers.L = e.data.left; slot.buffers.R = e.data.right;</span></p>
+<p class="p1"><span class="s1">        // Create AudioBuffer from floats</span></p>
+<p class="p1"><span class="s1">        const L = mergeFloat32(slot.buffers.L); const R = mergeFloat32(slot.buffers.R);</span></p>
+<p class="p1"><span class="s1">        const len = Math.min(L.length, R.length);</span></p>
+<p class="p1"><span class="s1">        const ab = ctx.createBuffer(2, len, ctx.sampleRate);</span></p>
+<p class="p1"><span class="s1">        ab.copyToChannel(L.subarray(0,len),0); ab.copyToChannel(R.subarray(0,len),1);</span></p>
+<p class="p1"><span class="s1">        // Build/replace player</span></p>
+<p class="p1"><span class="s1">        if(slot.bufSrc){ try{slot.bufSrc.stop();}catch(e){}; try{slot.bufSrc.disconnect();}catch(e){} }</span></p>
+<p class="p1"><span class="s1">        const src = ctx.createBufferSource(); src.buffer = ab; src.loop = true;</span></p>
+<p class="p1"><span class="s1">        const g = ctx.createGain(); g.gain.value = parseFloat(document.getElementById('lgain'+slot.index).value);</span></p>
+<p class="p1"><span class="s1">        src.connect(g).connect(ctx._loopBus);</span></p>
+<p class="p1"><span class="s1">        slot.bufSrc = src; slot.gain = g;</span></p>
+<p class="p1"><span class="s1">        el('lstat'+slot.index).textContent = 'Captured ('+(ab.duration.toFixed(2))+'s)';</span></p>
+<p class="p1"><span class="s1">      }</span></p>
+<p class="p1"><span class="s1">    };</span></p>
+<p class="p1"><span class="s1">  }</span></p>
+<p class="p1"><span class="s1">  function startLoopRecord(slot){ if(slot.isRecording) return; slot.recNode.port.postMessage({cmd:'start'}); slot.isRecording=true; el('lstat'+slot.index).textContent='Recording…'; }</span></p>
+<p class="p1"><span class="s1">  function stopLoopRecord(slot){ if(!slot.isRecording) return; slot.recNode.port.postMessage({cmd:'stop'}); slot.isRecording=false; }</span></p>
+<p class="p1"><span class="s1">  function toggleLoop(slot){ if(!slot.bufSrc){ el('lstat'+slot.index).textContent='Empty'; return; } if(slot.isPlaying){ try{slot.bufSrc.stop();}catch(e){} slot.isPlaying=false; el('lstat'+slot.index).textContent='Stopped'; } else { const src = ctxObj.ctx.createBufferSource(); src.buffer = slot.bufSrc.buffer; src.loop = true; const g = ctxObj.ctx.createGain(); g.gain.value = slot.gain?slot.gain.gain.value:1; src.connect(g).connect(ctxObj.ctx._loopBus); src.start(); slot.bufSrc = src; slot.gain = g; slot.isPlaying=true; el('lstat'+slot.index).textContent='Playing'; } }</span></p>
+<p class="p1"><span class="s1">  function clearLoop(slot){ if(slot.bufSrc){ try{slot.bufSrc.stop();}catch(e){}; try{slot.bufSrc.disconnect();}catch(e){} } slot.bufSrc=null; slot.buffers={L:[],R:[]}; slot.isPlaying=false; el('lstat'+slot.index).textContent='Empty'; }</span></p>
+<p class="p1"><span class="s1">  // ---------- Start ----------</span></p>
+<p class="p1"><span class="s1">  setUI();</span></p>
+<p class="p1"><span class="s1">})();</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
